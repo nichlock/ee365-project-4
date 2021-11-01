@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="top_logic_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="top_logic_tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="852710000fs"></ZoomStartTime>
+      <ZoomEndTime time="1004470762fs"></ZoomEndTime>
+      <Cursor1Time time="527168000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="175"></NameColumnWidth>
+      <ValueColumnWidth column_width="122"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="16" />
+   <wvobject fp_name="/top_logic_tb/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/sys_clk" type="logic">
+      <obj_property name="ElementShortName">sys_clk</obj_property>
+      <obj_property name="ObjectShortName">sys_clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/data_result" type="array">
+      <obj_property name="ElementShortName">data_result[15:0]</obj_property>
+      <obj_property name="ObjectShortName">data_result[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/toggle" type="logic">
+      <obj_property name="ElementShortName">toggle</obj_property>
+      <obj_property name="ObjectShortName">toggle</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/step" type="logic">
+      <obj_property name="ElementShortName">step</obj_property>
+      <obj_property name="ObjectShortName">step</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider144">
+      <obj_property name="label">TTL Controller</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/DUT/data_output/data_to_output" type="array">
+      <obj_property name="ElementShortName">data_to_output[15:0]</obj_property>
+      <obj_property name="ObjectShortName">data_to_output[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/DUT/data_output/ttl_data" type="array">
+      <obj_property name="ElementShortName">ttl_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">ttl_data[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/DUT/data_output/byte_sel" type="other">
+      <obj_property name="ElementShortName">byte_sel</obj_property>
+      <obj_property name="ObjectShortName">byte_sel</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/DUT/data_output/state" type="other">
+      <obj_property name="ElementShortName">state</obj_property>
+      <obj_property name="ObjectShortName">state</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/DUT/data_output/ttl_trigger" type="logic">
+      <obj_property name="ElementShortName">ttl_trigger</obj_property>
+      <obj_property name="ObjectShortName">ttl_trigger</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider147">
+      <obj_property name="label">TTL</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/DUT/data_output/ttl_output/oReady" type="logic">
+      <obj_property name="ElementShortName">oReady</obj_property>
+      <obj_property name="ObjectShortName">oReady</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/DUT/data_output/ttl_output/bit_num" type="array">
+      <obj_property name="ElementShortName">bit_num[4:0]</obj_property>
+      <obj_property name="ObjectShortName">bit_num[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/DUT/data_output/ttl_output/timer" type="array">
+      <obj_property name="ElementShortName">timer[15:0]</obj_property>
+      <obj_property name="ObjectShortName">timer[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/DUT/data_output/ttl_output/oTx" type="logic">
+      <obj_property name="ElementShortName">oTx</obj_property>
+      <obj_property name="ObjectShortName">oTx</obj_property>
+   </wvobject>
+</wave_config>
