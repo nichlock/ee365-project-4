@@ -23,8 +23,8 @@ BEGIN
  BEGIN
 
 	  WAIT UNTIL rising_edge (iCLK);
---	  IF Cont /= X"FFFFF" THEN
-	  IF Cont /= X"0000F" THEN
+	  IF Cont /= X"FFFFF" THEN
+--	  IF Cont /= X"0000F" THEN
 		  Cont <= Cont + 1;	
 		  oRESET <= '1';	
 	  ELSE
