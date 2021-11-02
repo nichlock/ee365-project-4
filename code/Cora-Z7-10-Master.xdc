@@ -165,4 +165,4 @@ set_property IOSTANDARD LVCMOS33 [get_ports {led0_r}]
 
 set_property IOSTANDARD LVCMOS18 [get_ports {clk}]
 
-create_clock -add -name sys_clk_pin -period 40.00 -waveform {0 20} [get_ports { clk }];
+create_clock -add -name sys_clk_pin -period 80.00 -waveform {0 40} [get_ports { clk }];

@@ -44,25 +44,31 @@ type CounterDisplayState_t is (RESET, INIT, SEND_DATA);
   signal new_data_ready : std_logic := '0';
   signal state          : CounterDisplayState_t;
   signal byte_sel       : integer := 0;
+  
+  signal iData_q        : std_logic_vector(B downto 0);
+  
+  
+  attribute mark_debug : string; 
+  attribute mark_debug of state : signal is "true";
 
 begin
-
---    process(iRst)
---    begin
---        if(iRst = '1') then
---            state <= RESET;
---        end if;
---    end process;
     
     process(iClk)
     begin
     if(iClk = '1') then
+        if(NOT(iData = iData_q)) then
+            new_data_ready <= '1';
+            iData_q <= iData;
+        end if;
+        
         if(iRst = '1') then
             state <= RESET;
         end if;
+        
         if(state = RESET) then
             ttl_trigger <= '0';
             data_to_output <= x"0000";
+            new_data_ready <= '0';
             if(iRst = '0') then
                 state <= INIT;
             end if;
@@ -98,13 +104,14 @@ begin
                     when 3 => ttl_data <= x"0"&data_to_output(3  downto 0);
                     when others => data_to_output <= iData; -- While waiting, refresh the input
                 end case;
-                ttl_trigger <= '1';
 
                 if(byte_sel < 4) then -- Stop counting after 4 to avoid overflow
+                    ttl_trigger <= '1';
                     byte_sel <= byte_sel + 1;
                 elsif (new_data_ready = '1') then
                     -- All data has been sent, and updated data is available
                     byte_sel <= 0;
+                    new_data_ready <= '0';
                 end if;
             else
                 ttl_trigger <= '0';
@@ -113,11 +120,6 @@ begin
             
         end if;
     end if;
-    end process;
-    
-    process(iData)
-    begin
-        new_data_ready <= '1';
     end process;
 
 ttl_output: ttl_serial 

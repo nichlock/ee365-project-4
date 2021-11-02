@@ -16,7 +16,7 @@ set_property PACKAGE_PIN Y17 [get_ports {ja[3]}]
 set_property PACKAGE_PIN Y16 [get_ports {ja[2]}]
 set_property PACKAGE_PIN Y19 [get_ports {ja[1]}]
 
-create_clock -add -name sys_clk_pin -period 40.00 -waveform {0 20} [get_ports { clk }];
+create_clock -add -name sys_clk_pin -period 8.00 -waveform {0 4} [get_ports { clk }];
 set_property -dict { PACKAGE_PIN H16   IOSTANDARD LVCMOS18 } [get_ports { clk }];
 
 set_property -dict {PACKAGE_PIN N15 IOSTANDARD LVCMOS18} [get_ports led0_r]

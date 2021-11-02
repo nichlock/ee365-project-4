@@ -6,9 +6,10 @@ use IEEE.numeric_std.ALL;
 -- use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 ENTITY Reset_Delay IS	
+    GENERIC (DELAY_LENGTH : unsigned(19 DOWNTO 0) := X"FFFFF");
     PORT (
         SIGNAL iCLK : IN std_logic;	
-        SIGNAL oRESET : OUT std_logic
+        SIGNAL oRESET : OUT std_logic := '1'
 			);	
 END Reset_Delay;
 
@@ -23,7 +24,7 @@ BEGIN
  BEGIN
 
 	  WAIT UNTIL rising_edge (iCLK);
-	  IF Cont /= X"FFFFF" THEN
+	  IF Cont /= DELAY_LENGTH THEN
 --	  IF Cont /= X"0000F" THEN
 		  Cont <= Cont + 1;	
 		  oRESET <= '1';	
