@@ -58,22 +58,22 @@ begin
         elseif(rising_edge(iClk)) then
             if(sig_counter_clk_en = '1') then
                 if(sig_counter_clk = CLK_DIV - 1) then
-                    sig_counter_clk = sig_counter_clk + 1;
-                    sig_sck_rise = '0';
-                    sig_sck_fall = '1';
+                    sig_counter_clk <= sig_counter_clk + 1;
+                    sig_sck_rise <= '0';
+                    sig_sck_fall <= '1';
                 elseif(sig_counter_clk = (CLK_DIV*2) - 1) then
-                    sig_counter_clk = 0;
-                    sig_sck_rise = '1';
-                    sig_sck_fall = '0';
+                    sig_counter_clk <= 0;
+                    sig_sck_rise <= '1';
+                    sig_sck_fall <= '0';
                 else
-                    sig_counter_clk = sig_counter_clk + 1;
-                    sig_sck_rise = '0';
-                    sig_sck_fall = '0';
+                    sig_counter_clk <= sig_counter_clk + 1;
+                    sig_sck_rise <= '0';
+                    sig_sck_fall <= '0';
                 end if;
             else
-                sig_counter_clk = 0;
-                sig_sck_rise = '0';
-                sig_sck_fall = '0';
+                sig_counter_clk <= 0;
+                sig_sck_rise <= '0';
+                sig_sck_fall <= '0';
             end if;
         end if;
     end process sck_clock;
@@ -98,6 +98,7 @@ begin
                     sig_state_next <= TRANSMIT;
                 else
                     sig_state_next <= START;
+                    
             when TRANSMIT
                 if ( (sig_sck_rise = '1') and (sig_counter <= 0)) then
                     sig_state_next <= DONE;
@@ -128,6 +129,7 @@ begin
             oSCK <= '0';
             oSS <= '1';
             oMOSI <= '1';
+            
         elseif (rising_edge(iClk)) then
             sig_trigger <= iTrigger;
             
