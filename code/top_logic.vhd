@@ -55,7 +55,7 @@ architecture Structural of top_logic is
   end component;
   
   
-component ttl_sseg_controller is
+component serial_controller is
    generic(BAUD: integer := 9600;
 	       B: integer := 15; 
            CLK_SPEED_HZ: integer := 125000000);
@@ -148,7 +148,7 @@ begin
 		q          => counter_value
     );
  
-  data_output: ttl_sseg_controller
+  data_output: serial_controller
     port map (
         iData     => lut_result,
         iClk      => iClk,

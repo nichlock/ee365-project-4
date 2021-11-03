@@ -2,7 +2,7 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use ieee.numeric_std.all;
 
-entity ttl_sseg_controller is
+entity serial_controller is
    generic(BAUD: integer := 9600;
 	       B: integer := 15; 
            CLK_SPEED_HZ: integer := 125000000);
@@ -15,9 +15,9 @@ entity ttl_sseg_controller is
       serialTrigger		: out std_logic;
       serialReady       : in std_logic
       );
-end ttl_sseg_controller;
+end serial_controller;
 
-architecture Behavioral of ttl_sseg_controller is
+architecture Behavioral of serial_controller is
   
   -- For TTL Serial output
   signal ttl_data    :std_logic_vector(7 downto 0) := x"00";
