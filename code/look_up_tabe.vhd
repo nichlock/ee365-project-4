@@ -11,11 +11,12 @@ entity look_up_table is
       iRst       : in STD_LOGIC;
       iCnt       : in STD_LOGIC_VECTOR(B-1 downto 0); 
       iClk       : in STD_LOGIC;
-	   oData      : out STD_LOGIC_VECTOR(15 downto 0)
+	  oData      : out STD_LOGIC_VECTOR(15 downto 0)
     );
 end look_up_table;
 
 architecture table of look_up_table is 
+
 begin
 
   process (iRst, iClk)

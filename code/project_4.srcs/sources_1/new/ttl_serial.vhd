@@ -49,7 +49,7 @@ begin
                 end if;
                 
                 -- Time for a new data output
-                if(timer >= (CLK_SPEED_HZ / BAUD_BPS)) then
+                if(timer = (CLK_SPEED_HZ / BAUD_BPS)) then
                     case bit_num is 
                         when b"00000" => oTx <= '0'; -- Start bit
                         when b"00001" => oTx <= iData(7);

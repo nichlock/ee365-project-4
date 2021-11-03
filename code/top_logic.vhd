@@ -39,17 +39,35 @@ architecture Structural of top_logic is
 	 );
   end component;
   
- component ttl_sseg_controller is
+ component ttl_serial is
 	 generic(
-	   BAUD: integer := BAUD; 
+	   BAUD_BPS: integer := BAUD; 
 	   CLK_SPEED_HZ: integer := CLK_SPEED_HZ
      );
 	 port(
-      iData		: in  std_logic_vector(15 downto 0);
+      iData		: in  std_logic_vector(7 downto 0);
       iClk		: in  std_logic;
       iRst      : in  std_logic;
+      iTrigger  : in  std_logic;
+      oReady    : out std_logic;
 	  oTx 		: out std_logic
 	 );
+  end component;
+  
+  
+component ttl_sseg_controller is
+   generic(BAUD: integer := 9600;
+	       B: integer := 15; 
+           CLK_SPEED_HZ: integer := 125000000);
+   port(
+      iData		: in  std_logic_vector(B downto 0);
+      iClk		: in  std_logic;
+      iRst      : in  std_logic;
+	  oTx 		: out std_logic := '1';
+      serialData		: out std_logic_vector(7 downto 0);
+      serialTrigger		: out std_logic;
+      serialReady       : in  std_logic
+      );
   end component;
   
  component look_up_table is
@@ -58,7 +76,7 @@ architecture Structural of top_logic is
       iRst       : in STD_LOGIC;
       iCnt       : in STD_LOGIC_VECTOR(B-1 downto 0); 
       iClk       : in STD_LOGIC;
-	   oData      : out STD_LOGIC_VECTOR(15 downto 0)
+	  oData      : out STD_LOGIC_VECTOR(15 downto 0)
 	 );
   end component;
   
@@ -90,6 +108,12 @@ architecture Structural of top_logic is
   signal rst_n                :std_logic := '0';
   
   signal lut_result :std_logic_vector(15 downto 0);
+  
+  
+  -- For seven segment serial output
+  signal serial_ctrl_data    :std_logic_vector(7 downto 0) := x"00";
+  signal serial_ctrl_trigger :std_logic := '0';
+  signal serial_ctrl_ready   :std_logic;
 
 
 begin
@@ -129,15 +153,28 @@ begin
         iData     => lut_result,
         iClk      => iClk,
         iRst      => iRst,
-        oTx 	  => oTx
+        oTx 	  => oTx,
+        serialData     => serial_ctrl_data,
+        serialTrigger  => serial_ctrl_trigger,
+        serialReady    => serial_ctrl_ready
     );
+    
+    ttl_output: ttl_serial 
+        port map (
+          iClk      => iClk,
+          iRst      => iRst,
+          iData		=> serial_ctrl_data,
+          iTrigger  => serial_ctrl_trigger,
+          oReady    => serial_ctrl_ready,
+          oTx 		=> oTx
+        );
 	 
  lut: look_up_table
 	 port map (
       iRst        => iRst,
       iCnt        => counter_value,
       iClk        => iClk,
-	   oData      => lut_result
+	  oData       => lut_result
 	 );
 	 
  step_edd: edge_detector
