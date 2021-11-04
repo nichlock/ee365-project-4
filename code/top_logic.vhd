@@ -15,188 +15,238 @@ entity top_logic is
       iToggle       : in  std_logic; 
       iStep         : in  std_logic;
       oData         : out std_logic_vector(15 downto 0);
-      oTx           : out std_logic
+      oTx           : out std_logic;
+      oSCK          : out std_logic;
+      oSS           : out std_logic;
+      oMOSI         : out std_logic
     );
 end top_logic;
 
 
 architecture Structural of top_logic is
 
- component univ_bin_counter is
-	 generic(N: integer := B);
-	 port(
-		clk        : in std_logic;
-		reset      : in std_logic;
-		syn_clr    : in std_logic;
-		load       : in std_logic;
-		en         : in std_logic := '1';
-		up         : in std_logic;
-		clk_en     : in std_logic;
-		d          : in std_logic_vector(B-1 downto 0) := (others => '0');
-		max_tick   : out std_logic;
-		min_tick   : out std_logic;
-		q          : out std_logic_vector(B-1 downto 0)
-	 );
-  end component;
-  
- component ttl_serial is
-	 generic(
-	   BAUD_BPS: integer := BAUD; 
-	   CLK_SPEED_HZ: integer := CLK_SPEED_HZ
+    component univ_bin_counter is
+     generic(N: integer := B);
+     port(
+        clk        : in std_logic;
+        reset      : in std_logic;
+        syn_clr    : in std_logic;
+        load       : in std_logic;
+        en         : in std_logic := '1';
+        up         : in std_logic;
+        clk_en     : in std_logic;
+        d          : in std_logic_vector(B-1 downto 0) := (others => '0');
+        max_tick   : out std_logic;
+        min_tick   : out std_logic;
+        q          : out std_logic_vector(B-1 downto 0)
      );
-	 port(
+    end component;
+    
+    component ttl_serial is
+    generic(
+       BAUD_BPS: integer := BAUD; 
+       CLK_SPEED_HZ: integer := CLK_SPEED_HZ
+    );
+    port(
       iData		: in  std_logic_vector(7 downto 0);
       iClk		: in  std_logic;
       iRst      : in  std_logic;
       iTrigger  : in  std_logic;
       oReady    : out std_logic;
-	  oTx 		: out std_logic
-	 );
-  end component;
-  
-  
-component serial_controller is
-   generic(BAUD: integer := 9600;
-	       B: integer := 15; 
+      oTx 		: out std_logic
+    );
+    end component;
+    
+    component spi is
+    generic(
+        N : integer := 8;
+        CLK_SPEED_HZ: integer := 125000000;
+        CLK_SPEED_TRANSMIT_HZ: integer := 250000;
+        CLK_DIV : integer := 500
+    );
+    
+    port(
+        iClk     : in std_logic;
+        iRst     : in std_logic;
+        iData    : in std_logic_vector(7 downto 0);
+        iTrigger : in std_logic;
+        oReady   : out std_logic;
+        oSCK     : out std_logic;
+        oSS      : out std_logic;
+        oMOSI    : out std_logic
+    );
+    end component;
+    
+    
+    component serial_controller is
+    generic(BAUD: integer := 9600;
+           B: integer := 15; 
            CLK_SPEED_HZ: integer := 125000000);
-   port(
+    port(
       iData		: in  std_logic_vector(B downto 0);
       iClk		: in  std_logic;
       iRst      : in  std_logic;
-	  oTx 		: out std_logic := '1';
+      oTx 		: out std_logic := '1';
       serialData		: out std_logic_vector(7 downto 0);
       serialTrigger		: out std_logic;
       serialReady       : in  std_logic
       );
-  end component;
-  
- component look_up_table is
-	 generic(N: integer := N; B: integer := B);
-	 port(
+    end component;
+    
+    component look_up_table is
+     generic(N: integer := N; B: integer := B);
+     port(
       iRst       : in STD_LOGIC;
       iCnt       : in STD_LOGIC_VECTOR(B-1 downto 0); 
       iClk       : in STD_LOGIC;
-	  oData      : out STD_LOGIC_VECTOR(15 downto 0)
-	 );
-  end component;
-  
-  component edge_detector is
+      oData      : out STD_LOGIC_VECTOR(15 downto 0)
+     );
+    end component;
+    
+    component edge_detector is
     generic(
-	   high_edges: STD_LOGIC := '1'
-	 );
+       high_edges: STD_LOGIC := '1'
+     );
     port (
       iInput     : in STD_LOGIC;
       iEn        : in STD_LOGIC;
       iClk       : in STD_LOGIC;
-	   oPulse     : out STD_LOGIC
+       oPulse     : out STD_LOGIC
     );
-  end component;
-  
-  -- Counter logic signals
-  signal toggle_pulse         :std_logic := '0';
-  signal step_pulse           :std_logic := '0';
-  signal ctr_up               :std_logic := '1';
-  signal ctr_count_this_cycle :std_logic := '0';
-  signal ctr_reached_max      :std_logic := '0';
-  signal ctr_reached_min      :std_logic := '0';
-  
-  -- Internal logic to avoid surpassing maximum entries
-  signal reached_n            :std_logic := '0';
-  signal counter_value        :STD_LOGIC_VECTOR(B-1 downto 0) := x"0";
-  
-  -- For pulse generation enable line
-  signal rst_n                :std_logic := '0';
-  
-  signal lut_result :std_logic_vector(15 downto 0);
-  
-  
-  -- For seven segment serial output
-  signal serial_ctrl_data    :std_logic_vector(7 downto 0) := x"00";
-  signal serial_ctrl_trigger :std_logic := '0';
-  signal serial_ctrl_ready   :std_logic;
+    end component;
+    
+    -- Counter logic signals
+    signal toggle_pulse         :std_logic := '0';
+    signal step_pulse           :std_logic := '0';
+    signal ctr_up               :std_logic := '1';
+    signal ctr_count_this_cycle :std_logic := '0';
+    signal ctr_reached_max      :std_logic := '0';
+    signal ctr_reached_min      :std_logic := '0';
+    
+    -- Internal logic to avoid surpassing maximum entries
+    signal reached_n            :std_logic := '0';
+    signal counter_value        :STD_LOGIC_VECTOR(B-1 downto 0) := x"0";
+    
+    -- For pulse generation enable line
+    signal rst_n                :std_logic := '0';
+    
+    signal lut_result :std_logic_vector(15 downto 0);
+    
+    
+    -- For seven segment serial output
+    signal ttl_serial_ctrl_data    :std_logic_vector(7 downto 0) := x"00";
+    signal ttl_serial_ctrl_trigger :std_logic := '0';
+    signal ttl_serial_ctrl_ready   :std_logic;
+    signal spi_serial_ctrl_data    :std_logic_vector(7 downto 0) := x"00";
+    signal spi_serial_ctrl_trigger :std_logic := '0';
+    signal spi_serial_ctrl_ready   : std_logic;
 
 
 begin
 
-  rst_n <= NOT iRst;
-  
-  process(toggle_pulse)
-  begin
+    rst_n <= NOT iRst;
+    
+    process(toggle_pulse)
+    begin
     if (toggle_pulse = '1') then
-	   ctr_up <= NOT ctr_up;
-	 end if;
-  end process;
-	
-  -- Cancels the step pulse out if over/underflow is imminent
-  ctr_count_this_cycle <= step_pulse AND NOT ((ctr_reached_min AND NOT ctr_up) OR ((reached_n OR ctr_reached_max) AND ctr_up));
-  
-  reached_n <= '1' when unsigned(counter_value) = to_unsigned(N-1, 4) else '0';
-  
-  oData <= lut_result;
-
-  counter: univ_bin_counter 
+       ctr_up <= NOT ctr_up;
+     end if;
+    end process;
+    
+    -- Cancels the step pulse out if over/underflow is imminent
+    ctr_count_this_cycle <= step_pulse AND NOT ((ctr_reached_min AND NOT ctr_up) OR ((reached_n OR ctr_reached_max) AND ctr_up));
+    
+    reached_n <= '1' when unsigned(counter_value) = to_unsigned(N-1, 4) else '0';
+    
+    oData <= lut_result;
+    
+    counter: univ_bin_counter 
     port map (
-		clk        => iClk,
-		reset      => iRst,
-		syn_clr    => iRst,
-		load       => iRst,
-		--en         => , -- Always enabled
-		up         => ctr_up,
-		clk_en     => ctr_count_this_cycle,
-		max_tick   => ctr_reached_max,
-		min_tick   => ctr_reached_min,
-		q          => counter_value
+        clk        => iClk,
+        reset      => iRst,
+        syn_clr    => iRst,
+        load       => iRst,
+        --en         => , -- Always enabled
+        up         => ctr_up,
+        clk_en     => ctr_count_this_cycle,
+        max_tick   => ctr_reached_max,
+        min_tick   => ctr_reached_min,
+        q          => counter_value
     );
  
-  data_output: serial_controller
+    ttl_data_output: serial_controller
     port map (
         iData     => lut_result,
         iClk      => iClk,
         iRst      => iRst,
         oTx 	  => oTx,
-        serialData     => serial_ctrl_data,
-        serialTrigger  => serial_ctrl_trigger,
-        serialReady    => serial_ctrl_ready
+        serialData     => ttl_serial_ctrl_data,
+        serialTrigger  => ttl_serial_ctrl_trigger,
+        serialReady    => ttl_serial_ctrl_ready
     );
     
     ttl_output: ttl_serial 
-        port map (
-          iClk      => iClk,
-          iRst      => iRst,
-          iData		=> serial_ctrl_data,
-          iTrigger  => serial_ctrl_trigger,
-          oReady    => serial_ctrl_ready,
-          oTx 		=> oTx
-        );
+    port map (
+        iClk      => iClk,
+        iRst      => iRst,
+        iData		=> ttl_serial_ctrl_data,
+        iTrigger  => ttl_serial_ctrl_trigger,
+        oReady    => ttl_serial_ctrl_ready,
+        oTx 		=> oTx
+    );
 	 
- lut: look_up_table
-	 port map (
+	 
+	spi_data_output: serial_controller
+	port map(
+	   iData   => X"0001",
+	   iClk    => iClk,
+	   iRst    => iRst,
+	   oTx     => oTx,
+	   serialData => spi_serial_ctrl_data,
+	   serialTrigger => spi_serial_ctrl_trigger,
+	   serialReady => spi_serial_ctrl_ready
+	);
+	
+    spi_output: spi
+    port map (
+        iClk => iClk,
+        iRst => iRst,
+        iData => spi_serial_ctrl_data,
+        iTrigger => spi_serial_ctrl_trigger,
+        oReady => spi_serial_ctrl_ready,
+        oSCK => oSCK,
+        oSS => oSS,
+        oMOSI => oMOSI
+    );	 
+	 
+     lut: look_up_table
+     port map (
       iRst        => iRst,
       iCnt        => counter_value,
       iClk        => iClk,
-	  oData       => lut_result
-	 );
+      oData       => lut_result
+     );
 	 
- step_edd: edge_detector
+    step_edd: edge_detector
     generic map (
-	   high_edges => '0'
-	 )
+       high_edges => '0'
+     )
     port map (
       iInput => iStep,
       iEn    => rst_n,
       iClk   => iClk,
-	   oPulse => step_pulse
+       oPulse => step_pulse
     );
-	 
- toggle_edd: edge_detector
-    generic map (
-	   high_edges => '0'
-	 )
-    port map (
-      iInput => iToggle,
-      iEn    => rst_n,
-      iClk   => iClk,
-	   oPulse => toggle_pulse
-    );
+         
+     toggle_edd: edge_detector
+        generic map (
+           high_edges => '0'
+         )
+        port map (
+          iInput => iToggle,
+          iEn    => rst_n,
+          iClk   => iClk,
+           oPulse => toggle_pulse
+        );
 
 end Structural;
