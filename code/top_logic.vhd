@@ -62,7 +62,7 @@ architecture Structural of top_logic is
         N : integer := 8;
         CLK_SPEED_HZ: integer := 125000000;
         CLK_SPEED_TRANSMIT_HZ: integer := 250000;
-        CLK_DIV : integer := 500
+        CLK_DIV : integer := 2
     );
     
     port(
@@ -198,7 +198,7 @@ begin
 	 
 	spi_data_output: serial_controller
 	port map(
-	   iData   => X"0001",
+	   iData   => lut_result,
 	   iClk    => iClk,
 	   iRst    => iRst,
 	   oTx     => oTx,

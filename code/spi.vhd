@@ -43,7 +43,7 @@ architecture Behavioral of spi is
     signal sig_state_next : t_spi_state;
     signal sig_trigger : std_logic;
     signal sig_data : std_logic_vector(N-1 downto 0);
-    
+    signal ready_already: std_logic;
 begin
 
     sig_counter_status <= '0' when(sig_counter > 0) else '1';
@@ -102,7 +102,7 @@ begin
                 end if;
                 
             when TRANSMIT =>
-                if ( (sig_sck_rise = '1') and (sig_counter <= 0)) then
+                if ( (sig_sck_rise = '1') and (sig_counter = 0)) then
                     sig_state_next <= DONE;
                 else
                     sig_state_next <= TRANSMIT;
@@ -126,7 +126,7 @@ begin
     -- Output process
     output : process(iClk, iRst)
     begin
-        if (iRst = '0') then
+        if (iRst = '1') then
             sig_trigger <= '0';
             sig_data <= (others => '0');
             oReady <= '0';
@@ -142,21 +142,29 @@ begin
             case sig_state_present is
                 when START =>
                     sig_data <= iData;
-                    oReady <= '1';
-                    sig_counter <= N-1;
+                    
+                    sig_counter <= N;
                     sig_counter_clk_en <= '0';
                     oSCK <= '0';
                     oSS <= '1';
                     oMOSI <= '1';
-                
+                    
+                    if(ready_already = '1') then
+                        oReady <= '0';
+                     else 
+                        ready_already <= '1';
+                        oReady <= '1';
+                    end if;
+                    
                 when TRANSMIT =>
+                    ready_already <= '0';
                     oReady <= '0';
                     sig_counter_clk_en <= '1';
                     
                     if(sig_sck_rise = '1') then
-                        oSCK <= '1';
                         
                         if (sig_counter > 0) then
+                            oSCK <= '1';
                             sig_counter <= sig_counter - 1;
                             oMOSI <= sig_data(N-1);
                             sig_data <= sig_data(N-2 downto 0) & '1';
@@ -169,7 +177,7 @@ begin
                     
                 when DONE =>
                     oReady <= '0';
-                    sig_counter <= N-1;
+                    sig_counter <= N;
                     sig_counter_clk_en <= '0';
                     oSCK <= '0';
                     oSS <= '1';
