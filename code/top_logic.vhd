@@ -61,9 +61,9 @@ architecture Structural of top_logic is
     component spi is
     generic(
         N : integer := 8;
-        CLK_SPEED_HZ: integer := 125000000;
+        CLK_SPEED_HZ: integer := CLK_SPEED_HZ;
         CLK_SPEED_TRANSMIT_HZ: integer := 250000;
-        CLK_DIV : integer := 2
+        CLK_DIV : integer := 500
     );
     
     port(
@@ -82,7 +82,7 @@ architecture Structural of top_logic is
     component serial_controller is
     generic(BAUD: integer := 9600;
            B: integer := 15; 
-           CLK_SPEED_HZ: integer := 125000000);
+           CLK_SPEED_HZ: integer := CLK_SPEED_HZ);
     port(
       iData		: in  std_logic_vector(B downto 0);
       iClk		: in  std_logic;

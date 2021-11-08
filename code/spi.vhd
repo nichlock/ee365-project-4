@@ -7,8 +7,8 @@ entity spi is
     generic(
         N : integer := 8;                            -- Number of bits to transmit at once
         CLK_SPEED_HZ: integer := 125000000;          -- Clock speed used for communicating with the rest of the system
-        CLK_SPEED_TRANSMIT_HZ: integer := 250000;    -- Clock speed used for SPI transmission
-        CLK_DIV : integer := 500                     -- The clock division constant = CLK_SPEED_HZ / CLK_SPEED_TRANSMIT_HZ
+        CLK_SPEED_TRANSMIT_HZ: integer := 250000    -- Clock speed used for SPI transmission
+        
     );
     
     port(
@@ -29,7 +29,7 @@ architecture Behavioral of spi is
     
     -- Counter signals
     
-    signal sig_counter_clk : integer range 0 to 2*CLK_DIV;
+    signal sig_counter_clk : integer range 0 to 2*CLK_SPEED_HZ/CLK_SPEED_TRANSMIT_HZ;
     signal sig_sck_rise : std_logic;
     signal sig_sck_fall : std_logic;
     signal sig_counter_clk_en : std_logic;
@@ -58,11 +58,11 @@ begin
             
         elsif(rising_edge(iClk)) then
             if(sig_counter_clk_en = '1') then
-                if(sig_counter_clk = CLK_DIV - 1) then
+                if(sig_counter_clk = CLK_SPEED_HZ/CLK_SPEED_TRANSMIT_HZ - 1) then
                     sig_counter_clk <= sig_counter_clk + 1;
                     sig_sck_rise <= '0';
                     sig_sck_fall <= '1';
-                elsif(sig_counter_clk = (CLK_DIV*2) - 1) then
+                elsif(sig_counter_clk = (CLK_SPEED_HZ/CLK_SPEED_TRANSMIT_HZ*2) - 1) then
                     sig_counter_clk <= 0;
                     sig_sck_rise <= '1';
                     sig_sck_fall <= '0';
