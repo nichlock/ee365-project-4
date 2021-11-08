@@ -14,6 +14,7 @@ entity top_logic is
       iClk          : in  std_logic;
       iToggle       : in  std_logic; 
       iStep         : in  std_logic;
+      system_en     : in  std_logic;
       oData         : out std_logic_vector(15 downto 0);
       oTx           : out std_logic;
       oSCK          : out std_logic;
@@ -166,7 +167,7 @@ begin
         reset      => iRst,
         syn_clr    => iRst,
         load       => iRst,
-        --en         => , -- Always enabled
+        en         => system_en,
         up         => ctr_up,
         clk_en     => ctr_count_this_cycle,
         max_tick   => ctr_reached_max,
