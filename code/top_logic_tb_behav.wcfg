@@ -10,15 +10,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="1466407334fs"></ZoomStartTime>
-      <ZoomEndTime time="3080407335fs"></ZoomEndTime>
-      <Cursor1Time time="1719074000fs"></Cursor1Time>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="1828148046fs"></ZoomEndTime>
+      <Cursor1Time time="1050453000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="166"></NameColumnWidth>
+      <NameColumnWidth column_width="162"></NameColumnWidth>
       <ValueColumnWidth column_width="58"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="15" />
+   <WVObjectSize size="14" />
    <wvobject type="divider" fp_name="divider367">
       <obj_property name="label">Top Logic Signals</obj_property>
       <obj_property name="DisplayName">label</obj_property>
@@ -40,12 +40,6 @@
       <obj_property name="ElementShortName">iToggle</obj_property>
       <obj_property name="ObjectShortName">iToggle</obj_property>
       <obj_property name="label">Toggle</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_logic_tb/DUT/iStep" type="logic">
-      <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="ElementShortName">iStep</obj_property>
-      <obj_property name="ObjectShortName">iStep</obj_property>
-      <obj_property name="label">Step</obj_property>
    </wvobject>
    <wvobject fp_name="/top_logic_tb/DUT/iEn" type="logic">
       <obj_property name="DisplayName">label</obj_property>
