@@ -6,11 +6,11 @@ end top_logic_tb;
 
 architecture tb of top_logic_tb is
 	-- inputs from top_logic
-	signal rst				: std_logic;
-	signal sys_clk			: std_logic;
+	signal rst			: std_logic;
+	signal sys_clk		: std_logic;
 	signal data_result	: STD_LOGIC_VECTOR(15 downto 0);
 	
-	signal toggle		   : std_logic;
+	signal toggle		 : std_logic;
 	signal step	         : std_logic;
 	signal en            : std_logic := '1';
 
