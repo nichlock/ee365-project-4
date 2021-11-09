@@ -5,9 +5,8 @@ use IEEE.NUMERIC_STD.ALL;
 entity project_4 is
   port (
 	 btn       : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
-  -- BTN_ext   : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
+     BTN_ext   : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
 	 clk       : IN STD_LOGIC;
-	 --system_en : IN STD_LOGIC;
 	 ja        : OUT STD_LOGIC_VECTOR(7 downto 0);
 	 jb        : OUT STD_LOGIC_VECTOR(7 downto 0);
 	 led0_r    : OUT STD_LOGIC;
@@ -28,6 +27,8 @@ architecture HardwareLayer of project_4 is
 	iClk          : in  std_logic;
 	iToggle       : in  std_logic;
 	iStep         : in  std_logic;
+	iEn           : in std_logic;
+	iDir          : in std_logic;
 	oData         : out std_logic_vector(15 downto 0);
 	oTx           : out std_logic;
 	oSCK          : out std_logic;
@@ -64,7 +65,7 @@ architecture HardwareLayer of project_4 is
   end component;
   
   signal logic_reset      : STD_LOGIC;
-  signal reset_btn_deb    : STD_LOGIC := '0';
+  signal reset_btn_deb    : STD_LOGIC;
   signal reset_from_delay : STD_LOGIC;
   
   signal clk_divided    : STD_LOGIC;
@@ -79,6 +80,10 @@ architecture HardwareLayer of project_4 is
   signal tx_signal : STD_LOGIC;
   
   signal clk_div_reset : STD_LOGIC;
+  
+  signal system_en : STD_LOGIC;
+  
+  signal counter_dir : STD_LOGIC;
 
 begin
 
@@ -103,6 +108,8 @@ tl: top_logic
 	iClk     => clk_divided,
 	iToggle  => toggle,
 	iStep    => step,
+	iEn      => system_en,
+	iDir     => counter_dir,
 	oData    => data,
 	oTx      => tx_signal,
 	oSCK     => jb(3),
@@ -110,17 +117,24 @@ tl: top_logic
 	oMOSI    => jb(1)
  );
  
-toggle_deb: btn_debounce_toggle
+reset_deb: btn_debounce_toggle
 port map (
-   BTN_I      => BTN(0),
-   BTN_O      => toggle,
+   BTN_I      => BTN_ext(0),
+   BTN_O      => reset_btn_deb,
    CLK        => clk_divided
 );
 
-step_deb: btn_debounce_toggle
+enable_deb: btn_debounce_toggle
 port map (
-   BTN_I      => BTN(1),
-   BTN_O      => step,
+   BTN_I      => BTN_ext(1),
+   TOGGLE_O   => system_en,
+   CLK        => clk_divided
+);
+
+dir_deb: btn_debounce_toggle
+port map (
+   BTN_I      => BTN_ext(2),
+   TOGGLE_O   => counter_dir,
    CLK        => clk_divided
 );
 

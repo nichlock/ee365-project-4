@@ -1,5 +1,12 @@
 BTN0 - Connected to JA7
 	Reset button - initializes system when pressed and held, system starts counting when BTN0 is released. Basically just a reset.
+	(used as a button)
 	
 BTN1 - System enable/disable
-	Enable button - tied to universal counter's enable input
+	Enable button - tied to universal counter's enable input 
+	(used as a switch)
+
+BTN2 - System direction toggle
+	Direction toggle - system starts in default forward counting mode.
+	(used as a switch)
+	

@@ -15,6 +15,8 @@ entity top_logic is
       iClk          : in  std_logic;
       iToggle       : in  std_logic; 
       iStep         : in  std_logic;
+      iEn           : in std_logic;
+      iDir          : in std_logic;
       oData         : out std_logic_vector(15 downto 0);
       oTx           : out std_logic;
       oSCK          : out std_logic;
@@ -33,7 +35,7 @@ architecture Structural of top_logic is
         reset      : in std_logic;
         syn_clr    : in std_logic;
         load       : in std_logic;
-        en         : in std_logic := '1';
+        en         : in std_logic;
         up         : in std_logic;
         clk_en     : in std_logic;
         d          : in std_logic_vector(B-1 downto 0) := (others => '0');
@@ -114,7 +116,7 @@ architecture Structural of top_logic is
     -- Counter logic signals
     signal toggle_pulse         :std_logic := '0';
     signal step_pulse           :std_logic := '0';
-    signal ctr_up               :std_logic := '1';
+    signal ctr_up               :std_logic;
     signal ctr_count_this_cycle :std_logic := '0';
     signal ctr_reached_max      :std_logic := '0';
     signal ctr_reached_min      :std_logic := '0';
@@ -141,6 +143,7 @@ architecture Structural of top_logic is
 begin
 
     rst_n <= NOT iRst;
+    ctr_up <= iDir;
     
     process(toggle_pulse)
     begin
@@ -162,8 +165,8 @@ begin
         reset      => iRst,
         syn_clr    => iRst,
         load       => iRst,
-        en         => '1',
-        up         => ctr_up,
+        en         => iEn,
+        up         => iDir,
         clk_en     => ctr_count_this_cycle,
         max_tick   => ctr_reached_max,
         min_tick   => ctr_reached_min,
