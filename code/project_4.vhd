@@ -28,7 +28,6 @@ architecture HardwareLayer of project_4 is
 	iClk          : in  std_logic;
 	iToggle       : in  std_logic;
 	iStep         : in  std_logic;
-	system_en     : in std_logic;
 	oData         : out std_logic_vector(15 downto 0);
 	oTx           : out std_logic;
 	oSCK          : out std_logic;
@@ -107,8 +106,7 @@ tl: top_logic
 	oTx      => tx_signal,
 	oSCK     => jb(3),
 	oSS      => jb(2),
-	oMOSI    => jb(1),
-	system_en => '1'
+	oMOSI    => jb(1)
  );
  
 toggle_deb: btn_debounce_toggle

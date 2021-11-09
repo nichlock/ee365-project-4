@@ -7,6 +7,7 @@ entity top_logic is
       N: integer := 10;
       B: integer := 4;
       BAUD: integer := 9600;
+      SCK_SPEED: integer := 25000;
       CLK_SPEED_HZ: integer := 125000000
 	 );
     port (
@@ -14,7 +15,6 @@ entity top_logic is
       iClk          : in  std_logic;
       iToggle       : in  std_logic; 
       iStep         : in  std_logic;
-      system_en     : in  std_logic;
       oData         : out std_logic_vector(15 downto 0);
       oTx           : out std_logic;
       oSCK          : out std_logic;
@@ -58,24 +58,19 @@ architecture Structural of top_logic is
     );
     end component;
     
-    component spi is
-    generic(
-        N : integer := 8;
-        CLK_SPEED_HZ: integer := CLK_SPEED_HZ;
-        CLK_SPEED_TRANSMIT_HZ: integer := 250000;
-        CLK_DIV : integer := 500
-    );
-    
-    port(
-        iClk     : in std_logic;
-        iRst     : in std_logic;
-        iData    : in std_logic_vector(7 downto 0);
-        iTrigger : in std_logic;
-        oReady   : out std_logic;
-        oSCK     : out std_logic;
-        oSS      : out std_logic;
-        oMOSI    : out std_logic
-    );
+   component spi is
+   generic(SCK_SPEED_HZ: integer := SCK_SPEED;
+           CLK_SPEED_HZ: integer := CLK_SPEED_HZ);
+   port(
+      iData		: in  std_logic_vector(7 downto 0);
+      iClk		: in  std_logic;
+      iRst      : in  std_logic;
+      iTrigger  : in  std_logic;
+      oReady    : out std_logic := '0';
+	  oMosi     : out std_logic;
+	  oSs_n     : out std_logic;
+	  oSck      : out std_logic
+      );
     end component;
     
     
@@ -167,7 +162,7 @@ begin
         reset      => iRst,
         syn_clr    => iRst,
         load       => iRst,
-        en         => system_en,
+        en         => '1',
         up         => ctr_up,
         clk_en     => ctr_count_this_cycle,
         max_tick   => ctr_reached_max,
@@ -215,10 +210,10 @@ begin
         iData => spi_serial_ctrl_data,
         iTrigger => spi_serial_ctrl_trigger,
         oReady => spi_serial_ctrl_ready,
-        oSCK => oSCK,
-        oSS => oSS,
-        oMOSI => oMOSI
-    );	 
+        oSck => oSCK,
+        oSs_n => oSS,
+        oMosi => oMOSI
+    );
 	 
      lut: look_up_table
      port map (

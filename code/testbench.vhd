@@ -19,7 +19,8 @@ begin
 		generic map(N => 10, 
 		            B => 4,
 		            BAUD => 1,
-		            CLK_SPEED_HZ => 1
+		            CLK_SPEED_HZ => 1,
+		            SCK_SPEED => 1
 		            ) 
 			port map (
 			  iRst      => rst,
