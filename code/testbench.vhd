@@ -20,10 +20,12 @@ begin
 		            B => 4,
 		            BAUD => 1,
 		            CLK_SPEED_HZ => 1,
+		            COUNT_FREQ_HZ => 1,
 		            SCK_SPEED => 1
 		            ) 
 			port map (
 			  iRst      => rst,
+			  iEn       => '1',
 			  iClk      => sys_clk,
 			  iToggle   => toggle,
 			  iStep     => step,

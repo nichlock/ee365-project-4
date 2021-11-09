@@ -8,6 +8,7 @@ entity top_logic is
       B: integer := 4;
       BAUD: integer := 9600;
       SCK_SPEED: integer := 25000;
+      COUNT_FREQ_HZ: integer := 1;
       CLK_SPEED_HZ: integer := 125000000
 	 );
     port (
@@ -15,6 +16,7 @@ entity top_logic is
       iClk          : in  std_logic;
       iToggle       : in  std_logic; 
       iStep         : in  std_logic;
+      iEn           : in std_logic;
       oData         : out std_logic_vector(15 downto 0);
       oTx           : out std_logic;
       oSCK          : out std_logic;
@@ -33,7 +35,7 @@ architecture Structural of top_logic is
         reset      : in std_logic;
         syn_clr    : in std_logic;
         load       : in std_logic;
-        en         : in std_logic := '1';
+        en         : in std_logic;
         up         : in std_logic;
         clk_en     : in std_logic;
         d          : in std_logic_vector(B-1 downto 0) := (others => '0');
@@ -89,6 +91,17 @@ architecture Structural of top_logic is
       );
     end component;
     
+    
+   component periodic_pulse is
+   generic(FREQ_HZ: integer := 1;
+           CLK_SPEED_HZ: integer := CLK_SPEED_HZ);
+   port(
+      iClk		: in  std_logic;
+      iRst      : in  std_logic;
+	  oPulse    : out std_logic
+      );
+    end component;
+    
     component look_up_table is
      generic(N: integer := N; B: integer := B);
      port(
@@ -112,9 +125,9 @@ architecture Structural of top_logic is
     end component;
     
     -- Counter logic signals
-    signal toggle_pulse         :std_logic := '0';
+--    signal toggle_pulse         :std_logic := '0';
     signal step_pulse           :std_logic := '0';
-    signal ctr_up               :std_logic := '1';
+--    signal ctr_up               :std_logic := '1';
     signal ctr_count_this_cycle :std_logic := '0';
     signal ctr_reached_max      :std_logic := '0';
     signal ctr_reached_min      :std_logic := '0';
@@ -142,15 +155,8 @@ begin
 
     rst_n <= NOT iRst;
     
-    process(toggle_pulse)
-    begin
-    if (toggle_pulse = '1') then
-       ctr_up <= NOT ctr_up;
-     end if;
-    end process;
-    
     -- Cancels the step pulse out if over/underflow is imminent
-    ctr_count_this_cycle <= step_pulse AND NOT ((ctr_reached_min AND NOT ctr_up) OR ((reached_n OR ctr_reached_max) AND ctr_up));
+    ctr_count_this_cycle <= step_pulse AND NOT ((ctr_reached_min AND NOT iToggle) OR ((reached_n OR ctr_reached_max) AND iToggle));
     
     reached_n <= '1' when unsigned(counter_value) = to_unsigned(N-1, 4) else '0';
     
@@ -162,8 +168,8 @@ begin
         reset      => iRst,
         syn_clr    => iRst,
         load       => iRst,
-        en         => '1',
-        up         => ctr_up,
+        en         => iEn,
+        up         => iToggle,
         clk_en     => ctr_count_this_cycle,
         max_tick   => ctr_reached_max,
         min_tick   => ctr_reached_min,
@@ -222,27 +228,12 @@ begin
       iClk        => iClk,
       oData       => lut_result
      );
-	 
-    step_edd: edge_detector
-    generic map (
-       high_edges => '0'
-     )
-    port map (
-      iInput => iStep,
-      iEn    => rst_n,
-      iClk   => iClk,
-       oPulse => step_pulse
-    );
-         
-     toggle_edd: edge_detector
-        generic map (
-           high_edges => '0'
-         )
-        port map (
-          iInput => iToggle,
-          iEn    => rst_n,
-          iClk   => iClk,
-           oPulse => toggle_pulse
+        
+     counter_pulse: periodic_pulse
+     port map(
+        iClk   => iClk,
+        iRst   => iRst,
+        oPulse => step_pulse
         );
 
 end Structural;

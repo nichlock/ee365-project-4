@@ -10,15 +10,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="360114230fs"></ZoomEndTime>
-      <Cursor1Time time="10000000000fs"></Cursor1Time>
+      <ZoomStartTime time="982640000fs"></ZoomStartTime>
+      <ZoomEndTime time="1444652054fs"></ZoomEndTime>
+      <Cursor1Time time="1130393000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="154"></NameColumnWidth>
-      <ValueColumnWidth column_width="72"></ValueColumnWidth>
+      <ValueColumnWidth column_width="64"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="16" />
+   <WVObjectSize size="20" />
    <wvobject fp_name="/top_logic_tb/sys_clk" type="logic">
       <obj_property name="ElementShortName">sys_clk</obj_property>
       <obj_property name="ObjectShortName">sys_clk</obj_property>
@@ -82,5 +82,21 @@
    <wvobject fp_name="/top_logic_tb/DUT/spi_output/oSck" type="logic">
       <obj_property name="ElementShortName">oSck</obj_property>
       <obj_property name="ObjectShortName">oSck</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/DUT/ctr_count_this_cycle" type="logic">
+      <obj_property name="ElementShortName">ctr_count_this_cycle</obj_property>
+      <obj_property name="ObjectShortName">ctr_count_this_cycle</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/DUT/step_pulse" type="logic">
+      <obj_property name="ElementShortName">step_pulse</obj_property>
+      <obj_property name="ObjectShortName">step_pulse</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/DUT/ctr_up" type="logic">
+      <obj_property name="ElementShortName">ctr_up</obj_property>
+      <obj_property name="ObjectShortName">ctr_up</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/toggle" type="logic">
+      <obj_property name="ElementShortName">toggle</obj_property>
+      <obj_property name="ObjectShortName">toggle</obj_property>
    </wvobject>
 </wave_config>
