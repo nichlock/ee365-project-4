@@ -37,6 +37,7 @@ architecture HardwareLayer of project_4 is
   end component;
   
  component clock_div is
+    generic (DIV_RATIO : integer := 4);
     port(
       iClk     : in  std_logic;
       iRst     : in  std_logic;
