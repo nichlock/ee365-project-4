@@ -1,4 +1,3 @@
-
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -49,17 +48,17 @@ begin
                 end if;
                 
                 -- Time for a new data output
-                if(timer >= (CLK_SPEED_HZ / BAUD_BPS)) then
+                if(timer = (CLK_SPEED_HZ / BAUD_BPS)) then
                     case bit_num is 
                         when b"00000" => oTx <= '0'; -- Start bit
-                        when b"00001" => oTx <= iData(7);
-                        when b"00010" => oTx <= iData(6);
-                        when b"00011" => oTx <= iData(5);
-                        when b"00100" => oTx <= iData(4);
-                        when b"00101" => oTx <= iData(3);
-                        when b"00110" => oTx <= iData(2);
-                        when b"00111" => oTx <= iData(1);
-                        when b"01000" => oTx <= iData(0);
+                        when b"00001" => oTx <= iData(0);
+                        when b"00010" => oTx <= iData(1);
+                        when b"00011" => oTx <= iData(2);
+                        when b"00100" => oTx <= iData(3);
+                        when b"00101" => oTx <= iData(4);
+                        when b"00110" => oTx <= iData(5);
+                        when b"00111" => oTx <= iData(6);
+                        when b"01000" => oTx <= iData(7);
                         when others => oTx <= '1'; -- Stop condition
                     end case;
                     

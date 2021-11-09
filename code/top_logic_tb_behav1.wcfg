@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="top_logic_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="top_logic_tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="360114230fs"></ZoomEndTime>
+      <Cursor1Time time="10000000000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="154"></NameColumnWidth>
+      <ValueColumnWidth column_width="72"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="16" />
+   <wvobject fp_name="/top_logic_tb/sys_clk" type="logic">
+      <obj_property name="ElementShortName">sys_clk</obj_property>
+      <obj_property name="ObjectShortName">sys_clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/data_result" type="array">
+      <obj_property name="ElementShortName">data_result[15:0]</obj_property>
+      <obj_property name="ObjectShortName">data_result[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/DUT/lut_result" type="array">
+      <obj_property name="ElementShortName">lut_result[15:0]</obj_property>
+      <obj_property name="ObjectShortName">lut_result[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/DUT/spi_data_output/iData" type="array">
+      <obj_property name="ElementShortName">iData[15:0]</obj_property>
+      <obj_property name="ObjectShortName">iData[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/DUT/spi_data_output/serialTrigger" type="logic">
+      <obj_property name="ElementShortName">serialTrigger</obj_property>
+      <obj_property name="ObjectShortName">serialTrigger</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/DUT/spi_data_output/serialReady" type="logic">
+      <obj_property name="ElementShortName">serialReady</obj_property>
+      <obj_property name="ObjectShortName">serialReady</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/DUT/spi_output/oReady" type="logic">
+      <obj_property name="ElementShortName">oReady</obj_property>
+      <obj_property name="ObjectShortName">oReady</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/DUT/spi_output/oSck" type="logic">
+      <obj_property name="ElementShortName">oSck</obj_property>
+      <obj_property name="ObjectShortName">oSck</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/DUT/spi_output/oMosi" type="logic">
+      <obj_property name="ElementShortName">oMosi</obj_property>
+      <obj_property name="ObjectShortName">oMosi</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/DUT/ttl_serial_ctrl_data" type="array">
+      <obj_property name="ElementShortName">ttl_serial_ctrl_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">ttl_serial_ctrl_data[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/DUT/spi_serial_ctrl_data" type="array">
+      <obj_property name="ElementShortName">spi_serial_ctrl_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">spi_serial_ctrl_data[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/DUT/spi_serial_ctrl_trigger" type="logic">
+      <obj_property name="ElementShortName">spi_serial_ctrl_trigger</obj_property>
+      <obj_property name="ObjectShortName">spi_serial_ctrl_trigger</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/DUT/spi_serial_ctrl_ready" type="logic">
+      <obj_property name="ElementShortName">spi_serial_ctrl_ready</obj_property>
+      <obj_property name="ObjectShortName">spi_serial_ctrl_ready</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/DUT/ttl_serial_ctrl_ready" type="logic">
+      <obj_property name="ElementShortName">ttl_serial_ctrl_ready</obj_property>
+      <obj_property name="ObjectShortName">ttl_serial_ctrl_ready</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/DUT/ttl_serial_ctrl_trigger" type="logic">
+      <obj_property name="ElementShortName">ttl_serial_ctrl_trigger</obj_property>
+      <obj_property name="ObjectShortName">ttl_serial_ctrl_trigger</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/DUT/spi_output/oSck" type="logic">
+      <obj_property name="ElementShortName">oSck</obj_property>
+      <obj_property name="ObjectShortName">oSck</obj_property>
+   </wvobject>
+</wave_config>

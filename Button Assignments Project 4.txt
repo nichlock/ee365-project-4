@@ -1,0 +1,5 @@
+BTN0 - Connected to JA7
+	Reset button - initializes system when pressed and held, system starts counting when BTN0 is released. Basically just a reset.
+	
+BTN1 - System enable/disable
+	Enable button - tied to universal counter's enable input
