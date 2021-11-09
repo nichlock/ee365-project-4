@@ -56,7 +56,7 @@ begin
                 end if;
                 
                 -- Time for a new data output
-                if(timer = ((CLK_SPEED_HZ / SCK_SPEED_HZ))) then
+                if(timer = ((CLK_SPEED_HZ / SCK_SPEED_HZ) / 2)) then
                     case bit_num is 
                         when 0  => oMosi <= iData(7);
                         when 1  => oSck <= '1';
