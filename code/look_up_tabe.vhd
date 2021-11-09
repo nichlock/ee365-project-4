@@ -15,7 +15,7 @@ entity look_up_table is
     );
 end look_up_table;
 
-architecture table of look_up_table is 
+architecture table of look_up_table is
 
 begin
 
