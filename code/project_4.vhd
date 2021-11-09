@@ -19,7 +19,7 @@ architecture HardwareLayer of project_4 is
  generic(
 	N: integer := 10;
 	B: integer := 4;
-	CLK_SPEED_HZ: integer := 125000000 / 4
+	CLK_SPEED_HZ: integer := 125000000
  );
  port (
 	iRst          : in  std_logic;
@@ -65,8 +65,6 @@ architecture HardwareLayer of project_4 is
   signal logic_reset      : STD_LOGIC;
   signal reset_btn_deb    : STD_LOGIC;
   signal reset_from_delay : STD_LOGIC;
-  
-  signal clk_divided    : STD_LOGIC;
 
   signal toggle    : STD_LOGIC;
   signal step      : STD_LOGIC;
@@ -98,7 +96,7 @@ logic_reset <= reset_from_delay OR reset_btn_deb;
 tl: top_logic
  port map(
 	iRst     => logic_reset,
-	iClk     => clk_divided,
+	iClk     => CLK,
 	iToggle  => toggle,
 	iStep    => step,
 	iEn      => system_en,
@@ -113,26 +111,26 @@ reset_deb: btn_debounce_toggle
 port map (
    BTN_I      => ja(0),
    BTN_O      => reset_btn_deb,
-   CLK        => clk_divided
+   CLK        => CLK
 );
 
 enable_deb: btn_debounce_toggle
 port map (
    BTN_I      => ja(1),
    TOGGLE_O   => system_en,
-   CLK        => clk_divided
+   CLK        => CLK
 );
 
 dir_deb: btn_debounce_toggle
 port map (
    BTN_I      => ja(2),
    TOGGLE_O      => toggle,
-   CLK        => clk_divided
+   CLK        => CLK
 );
 
 rst_del_inst: Reset_Delay
 port map (
-  iCLK  => clk_divided,
+  iCLK  => CLK,
   oRESET => reset_from_delay
 );
 
@@ -141,13 +139,6 @@ generic map(DELAY_LENGTH => x"FFFFF")
 port map (
   iCLK  => CLK,
   oRESET => clk_div_reset
-);
-
-clk_div_inst: clock_div
-port map (
-  iCLK  => CLK,
-  iRst => clk_div_reset, -- Only resets from the initial delay
-  oDiv4 => clk_divided
 );
 
 end HardwareLayer;
