@@ -4,10 +4,9 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity project_4 is
   port (
-	 btn       : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
-     BTN_ext   : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
-	 clk       : IN STD_LOGIC;
-	 ja        : OUT STD_LOGIC_VECTOR(7 downto 0);
+	 btn       : IN  STD_LOGIC_VECTOR(1 DOWNTO 0);
+	 clk       : IN  STD_LOGIC;
+	 ja        : IN  STD_LOGIC_VECTOR(7 downto 0);
 	 jb        : OUT STD_LOGIC_VECTOR(7 downto 0);
 	 led0_r    : OUT STD_LOGIC;
 	 led1_r    : OUT STD_LOGIC
@@ -28,7 +27,6 @@ architecture HardwareLayer of project_4 is
 	iToggle       : in  std_logic;
 	iStep         : in  std_logic;
 	iEn           : in std_logic;
-	iDir          : in std_logic;
 	oData         : out std_logic_vector(15 downto 0);
 	oTx           : out std_logic;
 	oSCK          : out std_logic;
@@ -87,14 +85,9 @@ architecture HardwareLayer of project_4 is
 
 begin
 
-ja(0) <= tx_signal;
-ja(1) <= reset_from_delay;
-ja(2) <= clk_div_reset;
-ja(3) <= data(0);
-LED0_R <= tx_signal; -- Show TX being sent for quick visual confirmation
-
-led1_r <= toggle;
-
+jb(0) <= tx_signal;
+LED0_R <= NOT(tx_signal); -- Show TX being sent for quick visual confirmation
+LED1_R <= toggle;
 
 logic_reset <= reset_from_delay OR reset_btn_deb;
 
@@ -109,7 +102,6 @@ tl: top_logic
 	iToggle  => toggle,
 	iStep    => step,
 	iEn      => system_en,
-	iDir     => counter_dir,
 	oData    => data,
 	oTx      => tx_signal,
 	oSCK     => jb(3),
@@ -119,22 +111,22 @@ tl: top_logic
  
 reset_deb: btn_debounce_toggle
 port map (
-   BTN_I      => BTN_ext(0),
+   BTN_I      => ja(0),
    BTN_O      => reset_btn_deb,
    CLK        => clk_divided
 );
 
 enable_deb: btn_debounce_toggle
 port map (
-   BTN_I      => BTN_ext(1),
+   BTN_I      => ja(1),
    TOGGLE_O   => system_en,
    CLK        => clk_divided
 );
 
 dir_deb: btn_debounce_toggle
 port map (
-   BTN_I      => BTN_ext(2),
-   TOGGLE_O   => counter_dir,
+   BTN_I      => ja(2),
+   TOGGLE_O      => toggle,
    CLK        => clk_divided
 );
 
