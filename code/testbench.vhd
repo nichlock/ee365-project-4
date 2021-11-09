@@ -12,6 +12,7 @@ architecture tb of top_logic_tb is
 	
 	signal toggle		   : std_logic;
 	signal step	         : std_logic;
+	signal en            : std_logic := '1';
 
 begin
 -- PORT MAP TO TOP_LEVEL ------------------------------------------------------
@@ -19,13 +20,13 @@ begin
 		generic map(N => 10, 
 		            B => 4,
 		            BAUD => 1,
-		            CLK_SPEED_HZ => 1,
+		            CLK_SPEED_HZ => 2,
 		            COUNT_FREQ_HZ => 1,
 		            SCK_SPEED => 1
 		            ) 
 			port map (
 			  iRst      => rst,
-			  iEn       => '1',
+			  iEn       => en,
 			  iClk      => sys_clk,
 			  iToggle   => toggle,
 			  iStep     => step,
@@ -47,7 +48,7 @@ begin
 	----------------------------------------------------------------------------
    -- BEGIN TEST CODE ---------------------------------------------------------
 	rst <= '1';
-	toggle <= '0';
+	toggle <= '1';
 	step <= '0';
 	wait for 1ns; -- Sample after clocking
 	wait for 20ns; -- Settle registers
@@ -77,8 +78,6 @@ begin
 	step <= '1'; wait for 10ns; step <= '0'; wait for 40ns; assert (data_result = x"F00D") report "FAILED: Data was allowed to count beyond N - 1" severity error;
 	
 	-- COUNTS DOWN -------------------------------------------------------------
-	toggle <= '1';
-	wait for 10ns;
 	toggle <= '0';
 	wait for 40ns;
 	step <= '1'; wait for 10ns; step <= '0'; wait for 40ns; assert (data_result = x"BEEF") report "FAILED: Data did not decrement correctly" severity error;
@@ -94,6 +93,14 @@ begin
 	step <= '1'; wait for 10ns; step <= '0'; wait for 40ns; assert (data_result = x"FADE") report "FAILED: Data did not decrement correctly" severity error;
 	step <= '1'; wait for 10ns; step <= '0'; wait for 40ns; assert (data_result = x"0000") report "FAILED: Data did not decrement correctly" severity error;
 	step <= '1'; wait for 10ns; step <= '0'; wait for 40ns; assert (data_result = x"0000") report "FAILED: Data decrement below 0" severity error;
+	
+	-- PICKS UP SUDDEN CHANGE --------------------------------------------------
+	
+	wait for 500ns;
+	toggle <= '1';
+	wait for 50ns;
+	toggle <= '0';
+	en <= '0';
 	
 	-- END OF TEST CODE --------------------------------------------------------
 	----------------------------------------------------------------------------

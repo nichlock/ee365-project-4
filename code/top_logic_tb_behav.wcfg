@@ -10,81 +10,97 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="9772800000fs"></ZoomStartTime>
-      <ZoomEndTime time="9929223803fs"></ZoomEndTime>
-      <Cursor1Time time="527168000fs"></Cursor1Time>
+      <ZoomStartTime time="1466407334fs"></ZoomStartTime>
+      <ZoomEndTime time="3080407335fs"></ZoomEndTime>
+      <Cursor1Time time="1719074000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="175"></NameColumnWidth>
-      <ValueColumnWidth column_width="118"></ValueColumnWidth>
+      <NameColumnWidth column_width="166"></NameColumnWidth>
+      <ValueColumnWidth column_width="58"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="17" />
-   <wvobject fp_name="/top_logic_tb/rst" type="logic">
-      <obj_property name="ElementShortName">rst</obj_property>
-      <obj_property name="ObjectShortName">rst</obj_property>
+   <WVObjectSize size="15" />
+   <wvobject type="divider" fp_name="divider367">
+      <obj_property name="label">Top Logic Signals</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
    </wvobject>
    <wvobject fp_name="/top_logic_tb/sys_clk" type="logic">
+      <obj_property name="DisplayName">label</obj_property>
       <obj_property name="ElementShortName">sys_clk</obj_property>
       <obj_property name="ObjectShortName">sys_clk</obj_property>
+      <obj_property name="label">CLK</obj_property>
    </wvobject>
-   <wvobject fp_name="/top_logic_tb/data_result" type="array">
-      <obj_property name="ElementShortName">data_result[15:0]</obj_property>
-      <obj_property name="ObjectShortName">data_result[15:0]</obj_property>
+   <wvobject fp_name="/top_logic_tb/rst" type="logic">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+      <obj_property name="label">Reset</obj_property>
    </wvobject>
-   <wvobject fp_name="/top_logic_tb/toggle" type="logic">
-      <obj_property name="ElementShortName">toggle</obj_property>
-      <obj_property name="ObjectShortName">toggle</obj_property>
+   <wvobject fp_name="/top_logic_tb/DUT/iToggle" type="logic">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">iToggle</obj_property>
+      <obj_property name="ObjectShortName">iToggle</obj_property>
+      <obj_property name="label">Toggle</obj_property>
    </wvobject>
-   <wvobject fp_name="/top_logic_tb/step" type="logic">
-      <obj_property name="ElementShortName">step</obj_property>
-      <obj_property name="ObjectShortName">step</obj_property>
+   <wvobject fp_name="/top_logic_tb/DUT/iStep" type="logic">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">iStep</obj_property>
+      <obj_property name="ObjectShortName">iStep</obj_property>
+      <obj_property name="label">Step</obj_property>
    </wvobject>
-   <wvobject type="divider" fp_name="divider144">
-      <obj_property name="label">TTL Controller</obj_property>
+   <wvobject fp_name="/top_logic_tb/DUT/iEn" type="logic">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">iEn</obj_property>
+      <obj_property name="ObjectShortName">iEn</obj_property>
+      <obj_property name="label">Enable</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_logic_tb/DUT/lut_result" type="array">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">lut_result[15:0]</obj_property>
+      <obj_property name="ObjectShortName">lut_result[15:0]</obj_property>
+      <obj_property name="label">LUT Result</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider278">
+      <obj_property name="label">SPI Controller</obj_property>
       <obj_property name="DisplayName">label</obj_property>
    </wvobject>
-   <wvobject fp_name="/top_logic_tb/DUT/data_output/data_to_output" type="array">
-      <obj_property name="ElementShortName">data_to_output[15:0]</obj_property>
-      <obj_property name="ObjectShortName">data_to_output[15:0]</obj_property>
+   <wvobject fp_name="/top_logic_tb/DUT/spi_serial_ctrl_ready" type="logic">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">spi_serial_ctrl_ready</obj_property>
+      <obj_property name="ObjectShortName">spi_serial_ctrl_ready</obj_property>
+      <obj_property name="label">SPI Ready</obj_property>
    </wvobject>
-   <wvobject fp_name="/top_logic_tb/DUT/data_output/ttl_data" type="array">
-      <obj_property name="ElementShortName">ttl_data[7:0]</obj_property>
-      <obj_property name="ObjectShortName">ttl_data[7:0]</obj_property>
+   <wvobject fp_name="/top_logic_tb/DUT/spi_serial_ctrl_trigger" type="logic">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">spi_serial_ctrl_trigger</obj_property>
+      <obj_property name="ObjectShortName">spi_serial_ctrl_trigger</obj_property>
+      <obj_property name="label">SPI Trigger</obj_property>
    </wvobject>
-   <wvobject fp_name="/top_logic_tb/DUT/data_output/byte_sel" type="other">
-      <obj_property name="ElementShortName">byte_sel</obj_property>
-      <obj_property name="ObjectShortName">byte_sel</obj_property>
+   <wvobject fp_name="/top_logic_tb/DUT/spi_serial_ctrl_data" type="array">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">spi_serial_ctrl_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">spi_serial_ctrl_data[7:0]</obj_property>
+      <obj_property name="label">SPI Data</obj_property>
    </wvobject>
-   <wvobject fp_name="/top_logic_tb/DUT/data_output/state" type="other">
-      <obj_property name="ElementShortName">state</obj_property>
-      <obj_property name="ObjectShortName">state</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_logic_tb/DUT/data_output/ttl_trigger" type="logic">
-      <obj_property name="ElementShortName">ttl_trigger</obj_property>
-      <obj_property name="ObjectShortName">ttl_trigger</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_logic_tb/DUT/data_output/new_data_ready" type="logic">
-      <obj_property name="ElementShortName">new_data_ready</obj_property>
-      <obj_property name="ObjectShortName">new_data_ready</obj_property>
-   </wvobject>
-   <wvobject type="divider" fp_name="divider147">
-      <obj_property name="label">TTL</obj_property>
+   <wvobject type="divider" fp_name="divider279">
+      <obj_property name="label">UART Controller</obj_property>
       <obj_property name="DisplayName">label</obj_property>
    </wvobject>
-   <wvobject fp_name="/top_logic_tb/DUT/data_output/ttl_output/oReady" type="logic">
-      <obj_property name="ElementShortName">oReady</obj_property>
-      <obj_property name="ObjectShortName">oReady</obj_property>
+   <wvobject fp_name="/top_logic_tb/DUT/ttl_serial_ctrl_ready" type="logic">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">ttl_serial_ctrl_ready</obj_property>
+      <obj_property name="ObjectShortName">ttl_serial_ctrl_ready</obj_property>
+      <obj_property name="label">UART Ready</obj_property>
    </wvobject>
-   <wvobject fp_name="/top_logic_tb/DUT/data_output/ttl_output/bit_num" type="array">
-      <obj_property name="ElementShortName">bit_num[4:0]</obj_property>
-      <obj_property name="ObjectShortName">bit_num[4:0]</obj_property>
+   <wvobject fp_name="/top_logic_tb/DUT/ttl_serial_ctrl_trigger" type="logic">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">ttl_serial_ctrl_trigger</obj_property>
+      <obj_property name="ObjectShortName">ttl_serial_ctrl_trigger</obj_property>
+      <obj_property name="label">UART Trigger</obj_property>
    </wvobject>
-   <wvobject fp_name="/top_logic_tb/DUT/data_output/ttl_output/timer" type="array">
-      <obj_property name="ElementShortName">timer[15:0]</obj_property>
-      <obj_property name="ObjectShortName">timer[15:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_logic_tb/DUT/data_output/ttl_output/oTx" type="logic">
-      <obj_property name="ElementShortName">oTx</obj_property>
-      <obj_property name="ObjectShortName">oTx</obj_property>
+   <wvobject fp_name="/top_logic_tb/DUT/ttl_serial_ctrl_data" type="array">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">ttl_serial_ctrl_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">ttl_serial_ctrl_data[7:0]</obj_property>
+      <obj_property name="label">UART Data</obj_property>
    </wvobject>
 </wave_config>

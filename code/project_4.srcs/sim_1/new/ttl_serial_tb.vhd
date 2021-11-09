@@ -15,7 +15,7 @@ architecture tb of ttl_serial_tb is
 begin
 -- PORT MAP TO TOP_LEVEL ------------------------------------------------------
    DUT : entity work.ttl_serial
-		generic map(BAUD_BPS => 1, CLK_SPEED_HZ => 2) 
+		generic map(BAUD_BPS => 1, CLK_SPEED_HZ => 1) 
 			port map (
 			  iData      => dut_data,
 			  iClk       => sys_clk,
